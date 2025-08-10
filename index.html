@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="css/leaflet-measure.css" />
 
     <style>
-      html,
-      body,
-      #map {
+      html, body, #map {
         width: 100%;
         height: 100%;
         padding: 0;
@@ -29,10 +27,7 @@
       }
     </style>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet" />
 
     <style>
       /* --- JUDUL --- */
@@ -63,17 +58,9 @@
         margin: 0;
       }
       @media (max-width: 768px) {
-        #judul-container {
-          left: 10px;
-          padding: 8px 20px;
-          top: 10px;
-        }
-        #judul-animasi {
-          font-size: 20px;
-        }
-        #logo-desa {
-          height: 40px;
-        }
+        #judul-container { left: 10px; padding: 8px 20px; top: 10px; }
+        #judul-animasi { font-size: 20px; }
+        #logo-desa { height: 40px; }
       }
 
       /* --- TOGGLE --- */
@@ -115,9 +102,7 @@
         color: #2c3e50;
       }
 
-      .stat-container {
-        margin-top: 10px;
-      }
+      .stat-container { margin-top: 10px; }
       .stat-header {
         background: rgba(17, 63, 103, 0.8);
         padding: 6px 12px;
@@ -136,16 +121,8 @@
         text-align: center;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
       }
-      .stat-value {
-        font-size: 24px;
-        font-weight: bold;
-        color: #fff;
-      }
-      .stat-label {
-        font-size: 13px;
-        color: #fff;
-        margin-top: 4px;
-      }
+      .stat-value { font-size: 24px; font-weight: bold; color: #fff; }
+      .stat-label { font-size: 13px; color: #fff; margin-top: 4px; }
 
       /* --- TAB KATEGORI CHART --- */
       .category-buttons {
@@ -168,12 +145,8 @@
         background: #2563eb;
         color: #fff;
       }
-      .chart-wrap {
-        padding: 8px 6px;
-      }
-      canvas {
-        max-width: 100%;
-      }
+      .chart-wrap { padding: 8px 6px; }
+      canvas { max-width: 100%; }
     </style>
 
     <title></title>
@@ -221,7 +194,7 @@
       </div>
     </div>
 
-    <!-- ===== Leaflet & qgis2web JS (biarkan seperti sebelumnya) ===== -->
+    <!-- ===== Leaflet & qgis2web JS ===== -->
     <script src="js/qgis2web_expressions.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/L.Control.Layers.Tree.min.js"></script>
@@ -237,7 +210,7 @@
     <script src="data/AIRBELO_MENTOK_1.js"></script>
 
     <script>
-      // ====== Map init (ringkas, seperti punyamu) ======
+      // ====== Map init (sesuai tampilan peta sebelumnya) ======
       var highlightLayer;
       function highlightFeature(e) {
         highlightLayer = e.target;
@@ -312,15 +285,20 @@
           },
           mouseover: highlightFeature
         });
+
+        // === Popup: RT, Dusun, Sektor ===
+        const getVal = (k) => (feature.properties?.[k] == null ? '' : String(feature.properties[k]));
+        const rt = getVal('rt');
+        const dusun = getVal('dusun');
+        const sektor = getVal('sektor');
+
         var popupContent =
-          '<table>' +
-          '<tr><td colspan="2">' +
-          (feature.properties['rt'] !== null ? String(feature.properties['rt']) : '') +
-          '</td></tr>' +
-          '<tr><td colspan="2">' +
-          (feature.properties['dusun'] !== null ? String(feature.properties['dusun']) : '') +
-          '</td></tr>' +
+          '<table style="min-width:240px">' +
+          '<tr><td style="font-weight:600;width:90px">RT</td><td>:</td><td>' + rt + '</td></tr>' +
+          '<tr><td style="font-weight:600">Dusun</td><td>:</td><td>' + dusun + '</td></tr>' +
+          '<tr><td style="font-weight:600">Sektor</td><td>:</td><td>' + sektor + '</td></tr>' +
           '</table>';
+
         layer.bindPopup(popupContent, { maxHeight: 400 });
       }
 
@@ -359,7 +337,7 @@
 
     <!-- ===== Chart & Interaksi Panel ===== -->
     <script>
-      // --------- DATA PER KATEGORI (isi ulang sesuai data riil) ----------
+      // --------- DATA PER KATEGORI (silakan sesuaikan dengan data riil) ----------
       const chartData = {
         // 1) Kategori: Bekerja vs Tidak Bekerja
         work: {
@@ -405,7 +383,7 @@
 
       let chartInstance;
 
-      // Tooltip: tampilkan "Nama: jumlah (persen%)"
+      // Tooltip: "Nama: jumlah (persen%)"
       function tooltipLabel(context) {
         const total = context.dataset.data.reduce((a, b) => a + b, 0);
         const value = context.raw;
@@ -424,33 +402,24 @@
           data: {
             labels: cfg.labels,
             datasets: [
-              {
-                data: cfg.data,
-                backgroundColor: cfg.colors,
-                hoverOffset: 4
-              }
+              { data: cfg.data, backgroundColor: cfg.colors, hoverOffset: 4 }
             ]
           },
           options: {
             responsive: true,
             cutout: '50%',
             plugins: {
-              legend: { display: false },        // << legend dimatikan
+              legend: { display: false },  // legend dimatikan sesuai permintaan
               tooltip: {
-                callbacks: {
-                  label: tooltipLabel            // << label tooltip custom
-                }
+                callbacks: { label: tooltipLabel }
               },
-              title: {
-                display: false
-              }
+              title: { display: false }
             }
           }
         });
 
         // tandai tombol aktif
         document.querySelectorAll('.category-buttons button').forEach(b => b.classList.remove('active'));
-        ({ work: '#btn-work', status: '#btn-status', gender: '#btn-gender', age: '#btn-age' });
         const mapBtn = { work: '#btn-work', status: '#btn-status', gender: '#btn-gender', age: '#btn-age' }[key];
         document.querySelector(mapBtn).classList.add('active');
       }
@@ -487,9 +456,7 @@
       }
 
       // Klik tab kategori
-      function showChart(key) {
-        buildChart(key);
-      }
+      function showChart(key) { buildChart(key); }
     </script>
   </body>
 </html>
