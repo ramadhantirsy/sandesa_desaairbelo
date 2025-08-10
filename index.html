@@ -172,12 +172,12 @@
 
         <div class="stat-box">
           <div class="stat-value" id="jumlah-penduduk">0</div>
-          <div class="stat-label">Jumlah Penduduk</div>
+          <div class="stat-label">Jumlah Penduduk Usia 15-64 Tahun</div>
         </div>
 
         <div class="stat-box">
-          <div class="stat-value" id="persen-industri">0%</div>
-          <div class="stat-label">Lapangan Usaha Industri Pengolahan</div>
+          <div class="stat-value" id="persen-tambang">0%</div>
+          <div class="stat-label">Lapangan Usaha Utama: Pertambangan/Penggalian</div>
         </div>
       </div>
 
@@ -343,7 +343,7 @@
         work: {
           title: 'Bekerja / Tidak Bekerja',
           labels: ['Bekerja', 'Tidak Bekerja'],
-          data: [750, 484],
+          data: [1539, 1791],
           colors: ['#10b981', '#ef4444'] // hijau & merah
         },
 
@@ -360,7 +360,7 @@
             'Pekerja bebas non pertanian',
             'Pekerja keluarga/tidak dibayar'
           ],
-          data: [320, 150, 45, 980, 210, 110, 180, 240],
+          data: [507, 128, 44, 627, 99, 3, 39, 92],
           colors: ['#3b82f6','#8b5cf6','#f59e0b','#22c55e','#06b6d4','#ef4444','#a855f7','#84cc16']
         },
 
@@ -368,7 +368,7 @@
         gender: {
           title: 'Jenis Kelamin',
           labels: ['Laki-laki', 'Perempuan'],
-          data: [2300, 2005],
+          data: [1175, 1126],
           colors: ['#2563eb', '#ec4899']
         },
 
@@ -376,7 +376,7 @@
         age: {
           title: 'Kategori Umur',
           labels: ['15-24', '25-34', '35-44', '45-54', '55-64'],
-          data: [500, 900, 1200, 900, 805],
+          data: [220, 269, 410, 370, 192],
           colors: ['#3b82f6', '#8b5cf6', '#ef4444', '#14b8a6', '#f97316']
         }
       };
@@ -450,8 +450,8 @@
           // Default: tampilkan chart "work" (Bekerja/Tidak)
           buildChart('work');
           // Angka animasi contoh
-          animateValue('jumlah-penduduk', 0, 1234, 1500);
-          animateValue('persen-industri', 0, 28.75, 1500, '%');
+          animateValue('jumlah-penduduk', 0, 2301, 1500);
+          animateValue('persen-tambang', 0, 29.56, 1500, '%');
         }
       }
 
